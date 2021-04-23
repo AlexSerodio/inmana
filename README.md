@@ -5,6 +5,8 @@ To start your Phoenix server:
 - Create new projects with `mix phx.new project_name --no-html --no-webpack`
 - Install dependencies with `mix deps.get`
 - Create and migrate your database with `mix ecto.setup`
+- Create a migration with `mix ecto.gen.migration migration_name`
+- Apply migrations in database `mix ecto.migrate`
 - Create Credo configuration with `mix credo.gen.config`
 - Analyse project with `mix credo` or `mix credo --strict`
 - Compile project with `mix compile`

@@ -11,12 +11,15 @@ To start your Phoenix server:
 - Analyse project with `mix credo` or `mix credo --strict`
 - Compile project with `mix compile`
 - Start Phoenix endpoint with `mix phx.server`
+- List all service routes with `mix phx.routes`
 - Compile Phoenix project with `mix compile`
 - Run tests with `mix test`
 
+- Emails sent by the application using Bamboo in dev can be seen in http://localhost:4000/sent_emails
+
 Some notes:
 
-- Run `iex` to enter the elixir interactive mode;
+- Run `iex` to enter the elixir interactive mode and `iex -S mix` to enter using mix or `iex -S mix phx.server` to start server and iex together;
 - On the interactive mode, type `h` followed by the module and function name to see it's documentation. Ex: `h String.upcase`;
 - Files ended with `.ex` are elixir files and ended with `.exs` are elixir script files (usally config files).
 

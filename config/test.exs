@@ -18,5 +18,8 @@ config :inmana, InmanaWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+# Bamboo Mailer
+config :inmana, Inmana.Mailer, adapter: Bamboo.TestAdapter
+
 # Print only warnings and errors during test
 config :logger, level: :warn

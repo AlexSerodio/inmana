@@ -1,45 +1,84 @@
 # Inmana
 
-To start your Phoenix server:
+Inmana is a REST API to help manage restaurant supplies, sending weekly reports to registered restaurants with all supplies about to expire. The app was developed in Elixir for educational purposes during the **Next Level Week #5**, an event created by the [Rocketseat](https://rocketseat.com.br/) with the objective to teach several programming skills (in this case, Elixir) to accelerate your career.
 
-- Create new projects with `mix phx.new project_name --no-html --no-webpack`
-- Install dependencies with `mix deps.get`
-- Create and migrate your database with `mix ecto.setup`
-- Create a migration with `mix ecto.gen.migration migration_name`
-- Apply migrations in database `mix ecto.migrate`
-- Create Credo configuration with `mix credo.gen.config`
-- Analyse project with `mix credo` or `mix credo --strict`
-- Compile project with `mix compile`
-- Start Phoenix endpoint with `mix phx.server`
-- List all service routes with `mix phx.routes`
-- Compile Phoenix project with `mix compile`
-- Run tests with `mix test`
+## Getting Started
 
-- Emails sent by the application using Bamboo in dev can be seen in http://localhost:4000/sent_emails
+This project uses [Elixir](https://elixir-lang.org/install.html), [Phoenix](https://hexdocs.pm/phoenix/installation.html#phoenix) and [PostgreSQL](https://www.postgresql.org/download/), so make sure to have these three installed and well configured to continue (see referenced links for each one).
 
-Some notes:
+```bash
+git clone https://github.com/alexserodio/inmana
 
-- Run `iex` to enter the elixir interactive mode and `iex -S mix` to enter using mix or `iex -S mix phx.server` to start server and iex together;
-- On the interactive mode, type `h` followed by the module and function name to see it's documentation. Ex: `h String.upcase`;
-- Files ended with `.ex` are elixir files and ended with `.exs` are elixir script files (usally config files).
+cd inmana
 
-Syntax notes:
+# install all project dependencies
+mix deps.get
 
-- Pipe Operator ( |> ): used to "connect" functions calls, passing the result of a function to another. Ex:
-  ```elixir
-  name = params["name"]
-  |> String.trim()
-  |> String.downcase()
-  ```
+# create and apply database migrations
+mix ecto.setup
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+# finally, start server
+mix phx.server
+```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+### The application allows you to:
 
-## Learn more
+- register restaurants and supplies;
+- view supply information;
+- automatically sends weekly reports to all registered restaurants with a list of supplies that will expire in the next seven days;
 
-- Official website: https://www.phoenixframework.org/
-- Guides: https://hexdocs.pm/phoenix/overview.html
-- Docs: https://hexdocs.pm/phoenix
-- Forum: https://elixirforum.com/c/phoenix-forum
-- Source: https://github.com/phoenixframework/phoenix
+### REST API endpoints available:
+
+Restaurants:
+
+- `POST` /api/restaurants
+  <pre>
+  JSON body:
+  {
+    "name": "Sample Restaurant",
+    "email": "restaurant@sample.com"
+  }
+  </pre>
+
+Supplies:
+
+- `POST` /api/supplies
+  <pre>
+  JSON body:
+  {
+    "restaurant_id": "9554b712-08db-46a1-8dbe-e11386d7cbdb",
+    "description": "Nuggets",
+    "expiration_date": "2021-04-26",
+    "responsible": "John Doe"
+  }
+  </pre>
+- `GET` /api/supplies/`:id`
+  - where `:id` is a valid UUID such as: 5ed47c4e-38bc-4252-9888-263776fe2f4e
+  <pre>
+  JSON response:
+  {
+    "supply": {
+      "description": "Nuggets",
+      "expiration_date": "2021-04-26",
+      "responsible": "John Doe"
+      "restaurant_id": "9554b712-08db-46a1-8dbe-e11386d7cbdb",
+      "id": "5ed47c4e-38bc-4252-9888-263776fe2f4e"
+    }
+  }
+  </pre>
+
+### Extra information:
+
+- emails sent by the application in dev can be seen in http://localhost:4000/sent_emails;
+  - the GenServer scheduler is configured to send emails each 60 seconds for demonstration but in reality would be once a week;
+  - the emails are sent using the [Bamboo](https://github.com/thoughtbot/bamboo) dependency;
+- the project uses the [ExCoveralls](https://github.com/parroty/excoveralls) dependency for test coverage analysis, so you can run:
+  - `mix test` to just run the tests;
+  - `mix test --cover` to see test coverage in terminal;
+  - `mix coveralls.html` to generate html report file;
+- you can run the server with `iex -S mix phx.server` to enter interactive mode;
+
+### Some possibilities for improvement:
+
+- improve code coverage adding more and better test cases;
+- improve API adding more endpoints to, for example, update restaurant information, show all registered restaurants and all supplies from a restaurant.
